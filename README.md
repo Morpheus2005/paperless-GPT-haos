@@ -1,6 +1,6 @@
 # Paperless-GPT Home Assistant Add-on
 
-[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FYOUR_GITHUB_USERNAME%2Fpaperless-gpt-haos)
+[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FMorpheus2005%2Fpaperless-gpt-haos)
 
 AI-powered document titles, tags, and OCR for [Paperless-NGX](https://github.com/paperless-ngx/paperless-ngx) — directly in Home Assistant.
 
@@ -18,7 +18,7 @@ Uses [paperless-gpt](https://github.com/icereed/paperless-gpt) by [Icereed](http
 
 1. Click the badge above or add this repository to your Home Assistant:
    ```
-   https://github.com/YOUR_GITHUB_USERNAME/paperless-gpt-haos
+   https://github.com/Morpheus2005/paperless-gpt-haos
    ```
 2. Install the "Paperless-GPT" add-on
 3. Configure the add-on (see below)
@@ -106,7 +106,7 @@ Uses [paperless-gpt](https://github.com/icereed/paperless-gpt) by [Icereed](http
 ## Support
 
 - [Paperless-GPT GitHub](https://github.com/icereed/paperless-gpt) — upstream project
-- [Issues](https://github.com/YOUR_GITHUB_USERNAME/paperless-gpt-haos/issues) — add-on specific issues
+- [Issues](https://github.com/Morpheus2005/paperless-gpt-haos/issues) — add-on specific issues
 
 ## License
 
