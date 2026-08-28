@@ -1,0 +1,46 @@
+#include <tunables/global>
+
+profile paperless-gpt flags=(attach_disconnected) {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+
+  # Network access for HTTP API calls to Paperless-NGX and LLM providers
+  network inet,
+  network inet6,
+
+  # Allow access to the data volume
+  /data/** rw,
+  /data/ r,
+
+  # Allow access to addon config
+  /config/** r,
+  /config/ r,
+
+  # Allow access to share
+  /share/** rw,
+  /share/ r,
+
+  # Allow running the binary
+  /app/paperless-gpt rix,
+  /app/entrypoint.sh rix,
+  /app/** r,
+  /app/ r,
+
+  # Run script
+  /run.sh rix,
+
+  # Bashio
+  /usr/bin/bashio rix,
+
+  # System binaries
+  /bin/** rix,
+  /usr/bin/** rix,
+  /usr/local/bin/** rix,
+
+  # Temp files
+  /tmp/** rw,
+  /tmp/ rw,
+
+  # /dev/urandom for crypto
+  /dev/urandom r,
+}

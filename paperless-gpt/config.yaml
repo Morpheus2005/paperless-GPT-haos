@@ -1,0 +1,125 @@
+# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
+name: Paperless-GPT
+version: "0.27.0"
+slug: paperless_gpt
+description: AI-powered document titles, tags, and OCR for Paperless-NGX
+url: https://github.com/YOUR_GITHUB_USERNAME/paperless-gpt-haos
+arch:
+  - aarch64
+  - amd64
+  - armv7
+init: false
+map:
+  - share:rw
+  - addon_config:rw
+options:
+  paperless_base_url: "http://paperless-ngx:8000"
+  paperless_api_token: ""
+  paperless_public_url: ""
+  llm_provider: openai
+  llm_model: gpt-4o
+  openai_api_key: ""
+  openai_base_url: ""
+  openai_api_type: ""
+  mistral_api_key: ""
+  anthropic_api_key: ""
+  googleai_api_key: ""
+  ollama_host: ""
+  ollama_context_length: 8192
+  ollama_headers: ""
+  token_limit: 0
+  llm_language: English
+  manual_tag: paperless-gpt
+  auto_tag: paperless-gpt-auto
+  fail_tag: paperless-gpt-failed
+  ocr_provider: llm
+  vision_llm_provider: openai
+  vision_llm_model: gpt-4o
+  ocr_process_mode: image
+  pdf_skip_existing_ocr: false
+  auto_ocr_tag: paperless-gpt-ocr-auto
+  ocr_limit_pages: 5
+  ocr_max_retries: 3
+  create_local_hocr: false
+  local_hocr_path: /data/hocr
+  create_local_pdf: false
+  local_pdf_path: /data/pdf
+  pdf_upload: false
+  pdf_replace: false
+  pdf_copy_metadata: true
+  pdf_ocr_tagging: false
+  pdf_ocr_complete_tag: paperless-gpt-ocr-complete
+  google_project_id: ""
+  google_location: us
+  google_processor_id: ""
+  google_application_credentials: ""
+  azure_docai_endpoint: ""
+  azure_docai_key: ""
+  azure_docai_model_id: prebuilt-read
+  azure_docai_timeout_seconds: 120
+  azure_docai_output_content_format: text
+  docling_url: ""
+  docling_image_export_mode: embedded
+  docling_ocr_pipeline: vlm
+  docling_ocr_engine: easyocr
+  log_level: info
+  listen_interface: "0.0.0.0:8080"
+  puid: 10001
+  pgid: 10001
+schema:
+  paperless_base_url: str
+  paperless_api_token: str
+  paperless_public_url: "str?"
+  llm_provider: list(openai|ollama|mistral|anthropic|googleai)
+  llm_model: str
+  openai_api_key: "str?"
+  openai_base_url: "str?"
+  openai_api_type: "str?"
+  mistral_api_key: "str?"
+  anthropic_api_key: "str?"
+  googleai_api_key: "str?"
+  ollama_host: "str?"
+  ollama_context_length: "int?"
+  ollama_headers: "str?"
+  token_limit: "int?"
+  llm_language: "str?"
+  manual_tag: "str?"
+  auto_tag: "str?"
+  fail_tag: "str?"
+  ocr_provider: list(llm|google_docai|azure|docling)
+  vision_llm_provider: "list(openai|ollama|mistral|anthropic)?"
+  vision_llm_model: "str?"
+  ocr_process_mode: list(image|pdf|whole_pdf)
+  pdf_skip_existing_ocr: "bool?"
+  auto_ocr_tag: "str?"
+  ocr_limit_pages: "int?"
+  ocr_max_retries: "int?"
+  create_local_hocr: "bool?"
+  local_hocr_path: "str?"
+  create_local_pdf: "bool?"
+  local_pdf_path: "str?"
+  pdf_upload: "bool?"
+  pdf_replace: "bool?"
+  pdf_copy_metadata: "bool?"
+  pdf_ocr_tagging: "bool?"
+  pdf_ocr_complete_tag: "str?"
+  google_project_id: "str?"
+  google_location: "str?"
+  google_processor_id: "str?"
+  google_application_credentials: "str?"
+  azure_docai_endpoint: "str?"
+  azure_docai_key: "str?"
+  azure_docai_model_id: "str?"
+  azure_docai_timeout_seconds: "int?"
+  azure_docai_output_content_format: "list(text|markdown)?"
+  docling_url: "str?"
+  docling_image_export_mode: "list(embedded|placeholder)?"
+  docling_ocr_pipeline: "list(vlm|standard)?"
+  docling_ocr_engine: "str?"
+  log_level: list(debug|info|warn|error)
+  listen_interface: "str?"
+  puid: "int?"
+  pgid: "int?"
+ports:
+  8080/tcp: 8080
+webui: http://[HOST]:[PORT:8080]

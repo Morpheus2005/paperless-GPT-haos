@@ -1,0 +1,160 @@
+configuration:
+  paperless_base_url:
+    name: Paperless Base URL
+    description: URL of your Paperless-NGX instance
+  paperless_api_token:
+    name: Paperless API Token
+    description: API token from Paperless-NGX (Settings, API Tokens)
+  paperless_public_url:
+    name: Paperless Public URL
+    description: Public URL for Paperless-NGX (optional, used for links)
+  llm_provider:
+    name: LLM Provider
+    description: Choose your AI provider
+  llm_model:
+    name: LLM Model
+    description: Model name (e.g. gpt-4o, mistral-large-latest, qwen3:8b)
+  openai_api_key:
+    name: OpenAI API Key
+    description: Required if using OpenAI or a custom OpenAI-compatible endpoint
+  openai_base_url:
+    name: OpenAI Base URL
+    description: Custom OpenAI-compatible endpoint (Scaleway, OpenRouter, vLLM)
+  openai_api_type:
+    name: OpenAI API Type
+    description: Set to azure for Azure OpenAI Service
+  mistral_api_key:
+    name: Mistral API Key
+    description: Required if using Mistral
+  anthropic_api_key:
+    name: Anthropic API Key
+    description: Required if using Anthropic or Claude
+  googleai_api_key:
+    name: Google AI API Key
+    description: Required if using Google AI or Gemini
+  ollama_host:
+    name: Ollama Host
+    description: URL of your Ollama server (e.g. http://host.docker.internal:11434)
+  ollama_context_length:
+    name: Ollama Context Length
+    description: Context window for Ollama models
+  ollama_headers:
+    name: Ollama Headers
+    description: Optional headers for reverse-proxy auth
+  token_limit:
+    name: Token Limit
+    description: Recommended for smaller models (0 = no limit)
+  llm_language:
+    name: Document Language
+    description: Expected language of documents (e.g. English, German)
+  manual_tag:
+    name: Manual Tag
+    description: Tag name for manual processing
+  auto_tag:
+    name: Auto Tag
+    description: Tag name for automatic processing
+  fail_tag:
+    name: Fail Tag
+    description: Tag name for failed processing
+  ocr_provider:
+    name: OCR Provider
+    description: Choose OCR backend
+  vision_llm_provider:
+    name: Vision LLM Provider
+    description: Provider for vision-based OCR
+  vision_llm_model:
+    name: Vision LLM Model
+    description: Vision model name (e.g. gpt-4o, minicpm-v)
+  ocr_process_mode:
+    name: OCR Process Mode
+    description: How to process documents for OCR
+  pdf_skip_existing_ocr:
+    name: Skip Existing OCR
+    description: Skip OCR for PDFs that already have text
+  auto_ocr_tag:
+    name: Auto OCR Tag
+    description: Tag for automatic OCR processing
+  ocr_limit_pages:
+    name: OCR Page Limit
+    description: Maximum pages to OCR per document (0 = no limit)
+  ocr_max_retries:
+    name: OCR Max Retries
+    description: Max retries before fail-tagging (0 = retry forever)
+  create_local_hocr:
+    name: Create Local hOCR
+    description: Save hOCR files locally
+  local_hocr_path:
+    name: Local hOCR Path
+    description: Path for hOCR files
+  create_local_pdf:
+    name: Create Local PDF
+    description: Save enhanced PDFs locally
+  local_pdf_path:
+    name: Local PDF Path
+    description: Path for enhanced PDF files
+  pdf_upload:
+    name: Upload Enhanced PDF
+    description: Upload enhanced PDFs to Paperless-NGX
+  pdf_replace:
+    name: Replace Original PDF
+    description: Delete original after upload (DANGEROUS)
+  pdf_copy_metadata:
+    name: Copy PDF Metadata
+    description: Copy metadata from original document
+  pdf_ocr_tagging:
+    name: PDF OCR Tagging
+    description: Add tag to processed documents
+  pdf_ocr_complete_tag:
+    name: PDF OCR Complete Tag
+    description: Tag name for completed OCR
+  google_project_id:
+    name: Google Project ID
+    description: GCP project ID for Document AI
+  google_location:
+    name: Google Location
+    description: Document AI region
+  google_processor_id:
+    name: Google Processor ID
+    description: Document AI processor ID
+  google_application_credentials:
+    name: Google Credentials Path
+    description: Path to service account key JSON
+  azure_docai_endpoint:
+    name: Azure Document Intelligence Endpoint
+    description: Azure endpoint URL
+  azure_docai_key:
+    name: Azure Document Intelligence Key
+    description: Azure API key
+  azure_docai_model_id:
+    name: Azure Model ID
+    description: Azure model (default prebuilt-read)
+  azure_docai_timeout_seconds:
+    name: Azure Timeout
+    description: Timeout in seconds
+  azure_docai_output_content_format:
+    name: Azure Output Format
+    description: text or markdown
+  docling_url:
+    name: Docling Server URL
+    description: URL of Docling server
+  docling_image_export_mode:
+    name: Docling Image Export Mode
+    description: embedded or placeholder
+  docling_ocr_pipeline:
+    name: Docling OCR Pipeline
+    description: vlm or standard
+  docling_ocr_engine:
+    name: Docling OCR Engine
+    description: OCR engine (default easyocr)
+  log_level:
+    name: Log Level
+    description: Logging verbosity
+  listen_interface:
+    name: Listen Interface
+    description: Address and port to listen on
+  puid:
+    name: PUID
+    description: User ID for paperless-gpt process
+  pgid:
+    name: PGID
+    description: Group ID for paperless-gpt process
