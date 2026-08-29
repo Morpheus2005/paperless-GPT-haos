@@ -78,6 +78,17 @@ You can customize these tag names in the add-on configuration.
 
 The add-on exposes port 8080 for the web UI. By default, Home Assistant maps this to the same port. You can change the host port in the add-on's Network configuration.
 
+### Add to the Home Assistant sidebar
+
+To get a clickable entry in the Home Assistant sidebar (like other add-ons/apps):
+
+1. Make sure the add-on is **running** (the web UI is available on `http://homeassistant.local:8080`)
+2. Open the add-on page in Home Assistant → **Info** tab
+3. Toggle **"Show in sidebar"** ("In der Seitenleiste anzeigen") **ON**
+4. The add-on now appears in the sidebar; clicking it opens the UI directly
+
+> Note: This relies on the `webui` key being present in `config.yaml` (it is). The sidebar toggle itself is a per-installation Home Assistant setting controlled by the user — it cannot be forced from the repository. Adding a "Webpage" dashboard entry (Settings → Dashboards) is an alternative, but the built-in add-on toggle is the recommended way.
+
 ### Data Storage
 
 Persistent data (hOCR files, enhanced PDFs, prompts) is stored in the add-on's data volume (`/data`).
