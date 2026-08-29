@@ -20,13 +20,28 @@ This add-on runs [paperless-gpt](https://github.com/icereed/paperless-gpt), whic
 1. Install the add-on
 2. Go to the **Configuration** tab
 3. Set at minimum:
-   - `paperless_base_url` — URL of your Paperless-NGX instance
+   - `paperless_base_url` — URL of your Paperless-NGX instance (default `http://paperless-ngx:8000`)
    - `paperless_api_token` — API token from Paperless-NGX
-   - `llm_provider` — your LLM provider
-   - `llm_model` — model name
-   - API key for your chosen provider
+   - `openai_api_key` — your API key for the configured endpoint
 4. Save and start the add-on
 5. Click **Open Web UI** or navigate to `http://homeassistant.local:8080`
+
+### Defaults (v0.28.0+)
+
+The add-on ships pre-configured for **Scaleway AI** (OpenAI-compatible) with the **`pixtral-12b-2409`** vision model:
+
+- `llm_provider`: `openai`
+- `llm_model`: `pixtral-12b-2409`
+- `openai_base_url`: `https://api.scaleway.ai/<your-project-id>/v1`
+- `vision_llm_provider`: `openai`
+- `vision_llm_model`: `pixtral-12b-2409`
+- `ocr_provider`: `llm`
+
+To go live you only need to add:
+- your **Paperless-NGX API token** (`paperless_api_token`)
+- your **Scaleway API key** (`openai_api_key`)
+
+If you use a different provider, simply change `openai_base_url` / `llm_model` / `vision_llm_model` to match your endpoint (any OpenAI-compatible API works: OpenRouter, vLLM, LiteLLM, LM Studio, etc.).
 
 ### Using Custom OpenAI-Compatible Endpoints
 

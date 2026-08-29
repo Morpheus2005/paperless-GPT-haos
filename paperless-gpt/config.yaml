@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Paperless-GPT
-version: "0.27.0"
+version: "0.28.0"
 slug: paperless_gpt
 description: AI-powered document titles, tags, and OCR for Paperless-NGX
 url: https://github.com/Morpheus2005/paperless-gpt-haos
@@ -17,9 +17,9 @@ options:
   paperless_api_token: ""
   paperless_public_url: ""
   llm_provider: openai
-  llm_model: gpt-4o
+  llm_model: pixtral-12b-2409
   openai_api_key: ""
-  openai_base_url: ""
+  openai_base_url: "https://api.scaleway.ai/879cefd3-5a3d-4ff1-83e1-104f2fec180a/v1"
   openai_api_type: ""
   mistral_api_key: ""
   anthropic_api_key: ""
@@ -34,7 +34,7 @@ options:
   fail_tag: paperless-gpt-failed
   ocr_provider: llm
   vision_llm_provider: openai
-  vision_llm_model: gpt-4o
+  vision_llm_model: pixtral-12b-2409
   ocr_process_mode: image
   pdf_skip_existing_ocr: false
   auto_ocr_tag: paperless-gpt-ocr-auto
