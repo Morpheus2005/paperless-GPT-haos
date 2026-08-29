@@ -1,8 +1,28 @@
+# ============================================================================
+# AppArmor profile: Paperless-GPT
+# Includes the s6-overlay v3 rules required by the Home Assistant base image
+# (see official docs: https://developers.home-assistant.io/blog/2022/05/12/s6-overlay-base-images)
+# ============================================================================
 #include <tunables/global>
 
 profile paperless-gpt flags=(attach_disconnected) {
   #include <abstractions/base>
   #include <abstractions/nameservice>
+
+  # --------------------------------------------------------------------------
+  # S6-Overlay v3 (REQUIRED for HA base image — without these /init cannot exec)
+  # --------------------------------------------------------------------------
+  /init ix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,
+  /etc/services.d/** rwix,
+  /etc/cont-init.d/** rwix,
+  /etc/cont-finish.d/** rwix,
+  /run/{,**} rwk,
+  /dev/tty rw,
 
   # Network access for HTTP API calls to Paperless-NGX and LLM providers
   network inet,
@@ -20,7 +40,7 @@ profile paperless-gpt flags=(attach_disconnected) {
   /share/** rw,
   /share/ r,
 
-  # Allow running the binary
+  # Allow running the paperless-gpt binary and its entrypoint
   /app/paperless-gpt rix,
   /app/entrypoint.sh rix,
   /app/** r,

@@ -1,3 +1,8 @@
+## 0.28.1
+
+- **Fix (startup)**: Root cause of `exec /init failed: Permission denied` was a missing/incorrect AppArmor profile. Added the s6-overlay v3 AppArmor rules required by the HA base image (`/init ix`, `/package/**`, `/run/s6/**`, etc.) so PID 1 can exec `/init` inside the container.
+- **Fix**: Corrected `init` back to `false` (correct for s6 v3 base images) and set execute (`100755`) bits on `run.sh` and `rootfs/etc/cont-init.d/00-paperless-gpt.sh` — s6 v3 no longer auto-adds execute permission.
+
 ## 0.28.0
 
 - **Fix**: Enable s6 init (`init: true`) — resolves `can't open /init: permission denied` on startup
