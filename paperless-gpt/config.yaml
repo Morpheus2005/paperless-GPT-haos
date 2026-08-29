@@ -8,7 +8,7 @@ arch:
   - aarch64
   - amd64
 init: false
-image: ghcr.io/Morpheus2005/paperless-gpt
+image: ghcr.io/morpheus2005/paperless-gpt
 map:
   - share:rw
   - addon_config:rw
