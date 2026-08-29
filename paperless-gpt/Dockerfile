@@ -6,7 +6,7 @@
 # Stage 2: Place them into the HA base image with bashio integration
 # =============================================================================
 
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/home-assistant/base:latest
 
 # -----------------------------------------------------------------------------
 # Stage 1: Extract paperless-gpt from the upstream image
