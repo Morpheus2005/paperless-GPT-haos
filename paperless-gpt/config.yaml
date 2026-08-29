@@ -7,7 +7,7 @@ url: https://github.com/Morpheus2005/paperless-gpt-haos
 arch:
   - aarch64
   - amd64
-init: false
+init: true
 image: ghcr.io/morpheus2005/paperless-gpt
 map:
   - share:rw
