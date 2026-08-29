@@ -9,6 +9,7 @@ arch:
   - amd64
   - armv7
 init: false
+image: ghcr.io/Morpheus2005/paperless-gpt-{arch}
 map:
   - share:rw
   - addon_config:rw

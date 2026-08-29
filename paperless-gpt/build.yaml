@@ -1,4 +1,0 @@
-# Build configuration for Home Assistant add-on
-# This tells the HA builder which image to use
-# https://developers.home-assistant.io/docs/add-ons/publishing
-image: ghcr.io/Morpheus2005/paperless-gpt-{arch}
