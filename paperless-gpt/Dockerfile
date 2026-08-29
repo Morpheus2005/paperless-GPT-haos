@@ -27,11 +27,14 @@ RUN \
         ca-certificates \
         su-exec
 
-# Install bashio (Home Assistant helper library)
+# bashio is already included in the HA base image
+# If not present (non-HA base), install it
 RUN \
-    curl -sSLf -o /usr/bin/bashio \
-        "https://github.com/hassio-addons/bashio/releases/download/v0.16.0/bashio" \
-    && chmod a+x /usr/bin/bashio
+    if ! command -v bashio &>/dev/null; then \
+        curl -sSLf -o /usr/bin/bashio \
+            "https://github.com/hassio-addons/bashio/releases/latest/download/bashio" \
+        && chmod a+x /usr/bin/bashio; \
+    fi
 
 # Copy paperless-gpt binary from upstream
 COPY --from=upstream /app/paperless-gpt /app/paperless-gpt
