@@ -1,3 +1,7 @@
+## 0.28.2
+
+- **Fix (startup)**: Disable the custom AppArmor profile (`apparmor: false`) and remove the broken `apparmor.txt`. The hand-crafted s6-overlay v3 profile still denied PID 1 from opening `/init` (`Permission denied`, exit code 2) even with `init: false`. Running the container under Docker's default security profile boots s6-overlay cleanly (verified: with `--security-opt apparmor=<addon>` it fails, without it it starts).
+
 ## 0.28.1
 
 - **Fix (startup)**: Root cause of `exec /init failed: Permission denied` was a missing/incorrect AppArmor profile. Added the s6-overlay v3 AppArmor rules required by the HA base image (`/init ix`, `/package/**`, `/run/s6/**`, etc.) so PID 1 can exec `/init` inside the container.

@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Paperless-GPT
-version: "0.28.1"
+version: "0.28.2"
 slug: paperless_gpt
 description: AI-powered document titles, tags, and OCR for Paperless-NGX
 url: https://github.com/Morpheus2005/paperless-gpt-haos
@@ -8,6 +8,7 @@ arch:
   - aarch64
   - amd64
 init: false
+apparmor: false
 image: ghcr.io/morpheus2005/paperless-gpt
 map:
   - share:rw
