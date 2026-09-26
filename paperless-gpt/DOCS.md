@@ -91,4 +91,4 @@ To get a clickable entry in the Home Assistant sidebar (like other add-ons/apps)
 
 ### Data Storage
 
-Persistent data (hOCR files, enhanced PDFs, prompts) is stored in the add-on's data volume (`/data`).
+Custom prompts are stored in the add-on config folder (`/config/prompts`, visible as `addon_configs/<id>_paperless_gpt/prompts` via Samba or Studio Code Server). Edit them there and restart the add-on. Settings (`/data/config`), the modification history (`/data/db`), hOCR files and enhanced PDFs are stored in the add-on's data volume (`/data`).

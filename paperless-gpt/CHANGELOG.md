@@ -1,3 +1,14 @@
+## 0.28.3
+
+- **Fix (persistence)**: paperless-gpt reads and writes `prompts/`, `config/` and `db/` relative to `/app`. These directories were not persistent, so custom prompts, settings (e.g. custom field selection) and the modification history were lost whenever the container was re-created. `run.sh` now links them to persistent storage:
+  - `/app/prompts` → `/config/prompts` (editable via Samba / Studio Code under `addon_configs/`)
+  - `/app/config` → `/data/config`
+  - `/app/db` → `/data/db`
+- **Fix**: Removed the default-prompt copy to `/data/prompts`. It checked for a non-existent `title.txt` and therefore ran on every start; the files were never read by paperless-gpt anyway. Missing prompts are still filled from the defaults by paperless-gpt itself, existing ones are never overwritten.
+- **Migration**: On first start, prompts found in `/data/prompts` are copied to `/config/prompts` (only if that folder is still empty).
+- **Build**: Upstream image pinned to `icereed/paperless-gpt:v0.28.0` (build arg `UPSTREAM_VERSION`) instead of `latest`, so every build ships the version the prompts were verified against.
+- **Defaults**: Neutral defaults again (`llm_model` and `vision_llm_model`: `gpt-4o`, `openai_base_url` empty), matching the README. Existing installations keep their configured values; for Scaleway see the README example.
+
 ## 0.28.2
 
 - **Fix (startup)**: Disable the custom AppArmor profile (`apparmor: false`) and remove the broken `apparmor.txt`. The hand-crafted s6-overlay v3 profile still denied PID 1 from opening `/init` (`Permission denied`, exit code 2) even with `init: false`. Running the container under Docker's default security profile boots s6-overlay cleanly (verified: with `--security-opt apparmor=<addon>` it fails, without it it starts).

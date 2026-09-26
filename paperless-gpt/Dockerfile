@@ -7,11 +7,15 @@
 # =============================================================================
 
 ARG BUILD_FROM=ghcr.io/home-assistant/base:latest
+# Upstream paperless-gpt version. Pinned on purpose: prompt templates, template
+# variables and response parsers are verified against this version. Bump it
+# deliberately and re-check the custom prompts after an upgrade.
+ARG UPSTREAM_VERSION=v0.28.0
 
 # -----------------------------------------------------------------------------
 # Stage 1: Extract paperless-gpt from the upstream image
 # -----------------------------------------------------------------------------
-FROM icereed/paperless-gpt:latest AS upstream
+FROM icereed/paperless-gpt:${UPSTREAM_VERSION} AS upstream
 
 # -----------------------------------------------------------------------------
 # Stage 2: Home Assistant base image with paperless-gpt

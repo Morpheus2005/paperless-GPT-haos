@@ -125,17 +125,51 @@ set_env_mapped "puid" "PUID"
 set_env_mapped "pgid" "PGID"
 
 # ----------------------------------------------------------------------------
-# Ensure data directories exist
+# Persistent storage
+# paperless-gpt works with paths relative to /app: prompts/, config/, db/.
+# Inside the container they are lost whenever the container is re-created
+# (add-on update, HA restart, Supervisor restart). Link them to persistent
+# add-on storage:
+#   /app/prompts -> /config/prompts   (addon_config: editable via Samba /
+#                                      Studio Code under addon_configs/)
+#   /app/config  -> /data/config      (settings.json, e.g. custom fields)
+#   /app/db      -> /data/db          (modification history / undo)
+# Missing prompt files are copied from /app/default_prompts by paperless-gpt
+# itself (loadTemplates), existing files are never overwritten.
 # ----------------------------------------------------------------------------
-mkdir -p /data/hocr /data/pdf /data/config /data/prompts
+mkdir -p /data/hocr /data/pdf
 
-# Copy default prompts if no custom prompts exist
-if [ ! -f /data/prompts/title.txt ]; then
-    if [ -d /app/default_prompts ]; then
-        cp -r /app/default_prompts/* /data/prompts/ 2>/dev/null || true
-        bashio::log.info "Default prompts copied to /data/prompts/"
+link_persistent() {
+    local name="$1"
+    local target="$2"
+    mkdir -p "${target}"
+    if [ -d "/app/${name}" ] && [ ! -L "/app/${name}" ]; then
+        # One-time migration of content created inside this container
+        if [ -z "$(ls -A "${target}" 2>/dev/null)" ]; then
+            cp -a "/app/${name}/." "${target}/" 2>/dev/null || true
+        fi
+        rm -rf "/app/${name}"
     fi
+    ln -sfn "${target}" "/app/${name}"
+}
+
+# One-time migration: prompts from older add-on versions lived in /data/prompts
+if [ -z "$(ls -A /config/prompts 2>/dev/null)" ] && [ -n "$(ls -A /data/prompts 2>/dev/null)" ]; then
+    mkdir -p /config/prompts
+    cp -a /data/prompts/. /config/prompts/ 2>/dev/null || true
+    rm -f /config/prompts/title.txt
+    bashio::log.info "Migrated prompts from /data/prompts to /config/prompts"
 fi
+
+link_persistent prompts /config/prompts
+link_persistent config  /data/config
+link_persistent db      /data/db
+
+# paperless-gpt runs as PUID:PGID; entrypoint.sh only chowns /app and does not
+# follow symlinks, so hand the persistent targets to that user explicitly.
+chown -R "${PUID:-10001}:${PGID:-10001}" /config/prompts /data/config /data/db
+
+bashio::log.info "Prompts: /config/prompts (addon_configs), settings and db: /data"
 
 # ----------------------------------------------------------------------------
 # Validate required settings
