@@ -1,3 +1,8 @@
+## 0.28.4
+
+- New option `openai_extra_body`: JSON object that is added to every chat request for `llm_model` when `llm_provider` is `openai`, e.g. `{"reasoning_effort":"none"}`. paperless-gpt itself cannot pass provider-specific parameters; a small built-in proxy (`llm-proxy`, see `proxy/`) adds them and forwards all other requests unchanged. Fields already present in a request are never overwritten.
+- Motivation: reasoning models such as `gemma-4-26b-a4b-it` on Scaleway can loop in their reasoning phase and return no answer. With reasoning disabled they answer reliably and much faster.
+
 ## 0.28.3
 
 - **Fix (persistence)**: paperless-gpt reads and writes `prompts/`, `config/` and `db/` relative to `/app`. These directories were not persistent, so custom prompts, settings (e.g. custom field selection) and the modification history were lost whenever the container was re-created. `run.sh` now links them to persistent storage:

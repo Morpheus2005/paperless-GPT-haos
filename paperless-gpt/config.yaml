@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Paperless-GPT
-version: "0.28.3"
+version: "0.28.4"
 slug: paperless_gpt
 description: AI-powered document titles, tags, and OCR for Paperless-NGX
 url: https://github.com/Morpheus2005/paperless-gpt-haos
@@ -22,6 +22,7 @@ options:
   openai_api_key: ""
   openai_base_url: ""
   openai_api_type: ""
+  openai_extra_body: ""
   mistral_api_key: ""
   anthropic_api_key: ""
   googleai_api_key: ""
@@ -76,6 +77,7 @@ schema:
   openai_api_key: "str?"
   openai_base_url: "str?"
   openai_api_type: "str?"
+  openai_extra_body: "str?"
   mistral_api_key: "str?"
   anthropic_api_key: "str?"
   googleai_api_key: "str?"

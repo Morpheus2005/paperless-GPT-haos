@@ -92,3 +92,21 @@ To get a clickable entry in the Home Assistant sidebar (like other add-ons/apps)
 ### Data Storage
 
 Custom prompts are stored in the add-on config folder (`/config/prompts`, visible as `addon_configs/<id>_paperless_gpt/prompts` via Samba or Studio Code Server). Edit them there and restart the add-on. Settings (`/data/config`), the modification history (`/data/db`), hOCR files and enhanced PDFs are stored in the add-on's data volume (`/data`).
+
+## Extra request fields (openai_extra_body)
+
+Some OpenAI-compatible providers accept parameters that paperless-gpt cannot
+send, for example Scaleway's `reasoning_effort` for reasoning models. Set
+`openai_extra_body` to a JSON object and the add-on adds it to every chat
+request for `llm_model`:
+
+```yaml
+llm_provider: openai
+llm_model: gemma-4-26b-a4b-it
+openai_base_url: https://api.scaleway.ai/<project-id>/v1
+openai_extra_body: '{"reasoning_effort":"none"}'
+```
+
+Requests for other models (e.g. the vision/OCR model) pass through unchanged.
+The add-on log shows `openai_extra_body active …` at start and
+`llm-proxy: added … field(s)` for each modified request.

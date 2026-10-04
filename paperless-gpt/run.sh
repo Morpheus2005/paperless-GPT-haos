@@ -60,6 +60,36 @@ set_env_mapped "token_limit" "TOKEN_LIMIT"
 set_env_mapped "llm_language" "LLM_LANGUAGE"
 
 # ----------------------------------------------------------------------------
+# Optional: extra request fields for OpenAI-compatible APIs
+# paperless-gpt cannot pass provider-specific parameters (e.g. Scaleway's
+# reasoning_effort). If openai_extra_body is set, a local proxy adds these
+# fields to every chat request for llm_model and forwards everything else
+# unchanged (vision/OCR model included).
+# ----------------------------------------------------------------------------
+if bashio::config.has_value "openai_extra_body" \
+    && [ "$(bashio::config 'llm_provider')" = "openai" ]; then
+    extra_body="$(bashio::config 'openai_extra_body')"
+    if ! printf '%s' "${extra_body}" | jq -e 'type == "object" and length > 0' >/dev/null 2>&1; then
+        bashio::log.error "openai_extra_body must be a JSON object, e.g. {\"reasoning_effort\":\"none\"}"
+        bashio::exit.nok
+    fi
+    export PROXY_UPSTREAM="${OPENAI_BASE_URL:-https://api.openai.com/v1}"
+    export PROXY_EXTRA_BODY="${extra_body}"
+    export PROXY_MODELS="$(bashio::config 'llm_model')"
+    export PROXY_LISTEN="127.0.0.1:18080"
+    (
+        while true; do
+            /usr/local/bin/llm-proxy || true
+            bashio::log.warning "llm-proxy stopped, restarting in 2 s"
+            sleep 2
+        done
+    ) &
+    export OPENAI_BASE_URL="http://127.0.0.1:18080"
+    bashio::log.info "openai_extra_body active for ${PROXY_MODELS}: ${extra_body}"
+    sleep 1
+fi
+
+# ----------------------------------------------------------------------------
 # Tags
 # ----------------------------------------------------------------------------
 set_env_mapped "manual_tag" "MANUAL_TAG"

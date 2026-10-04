@@ -23,6 +23,12 @@ configuration:
   openai_api_type:
     name: OpenAI API Type
     description: Set to azure for Azure OpenAI Service
+  openai_extra_body:
+    name: OpenAI extra request fields
+    description: >-
+      Optional JSON object added to every chat request for the LLM model,
+      e.g. {"reasoning_effort":"none"} to disable reasoning on Scaleway.
+      Only used with llm_provider openai.
   mistral_api_key:
     name: Mistral API Key
     description: Required if using Mistral

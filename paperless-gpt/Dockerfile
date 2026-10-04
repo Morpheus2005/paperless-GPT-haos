@@ -18,6 +18,15 @@ ARG UPSTREAM_VERSION=v0.28.0
 FROM icereed/paperless-gpt:${UPSTREAM_VERSION} AS upstream
 
 # -----------------------------------------------------------------------------
+# Stage 1b: Build llm-proxy (adds extra request fields such as
+# reasoning_effort for OpenAI-compatible APIs, see proxy/main.go)
+# -----------------------------------------------------------------------------
+FROM golang:1.23-alpine AS proxybuild
+WORKDIR /src
+COPY proxy/ .
+RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /llm-proxy .
+
+# -----------------------------------------------------------------------------
 # Stage 2: Home Assistant base image with paperless-gpt
 # -----------------------------------------------------------------------------
 FROM $BUILD_FROM
@@ -45,8 +54,11 @@ COPY --from=upstream /app/paperless-gpt /app/paperless-gpt
 COPY --from=upstream /app/entrypoint.sh /app/entrypoint.sh
 COPY --from=upstream /app/default_prompts/ /app/default_prompts/
 
-# Ensure binary is executable
-RUN chmod +x /app/paperless-gpt /app/entrypoint.sh
+# llm-proxy (optional, started by run.sh only if openai_extra_body is set)
+COPY --from=proxybuild /llm-proxy /usr/local/bin/llm-proxy
+
+# Ensure binaries are executable
+RUN chmod +x /app/paperless-gpt /app/entrypoint.sh /usr/local/bin/llm-proxy
 
 # Copy run script (HA integration layer)
 COPY run.sh /
