@@ -10,7 +10,7 @@ ARG BUILD_FROM=ghcr.io/home-assistant/base:latest
 # Upstream paperless-gpt version. Pinned on purpose: prompt templates, template
 # variables and response parsers are verified against this version. Bump it
 # deliberately and re-check the custom prompts after an upgrade.
-ARG UPSTREAM_VERSION=v0.28.0
+ARG UPSTREAM_VERSION=v0.31.0
 
 # -----------------------------------------------------------------------------
 # Stage 1: Extract paperless-gpt from the upstream image

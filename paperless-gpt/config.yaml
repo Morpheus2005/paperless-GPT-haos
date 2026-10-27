@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Paperless-GPT
-version: "0.28.5"
+version: "0.31.0"
 slug: paperless_gpt
 description: AI-powered document titles, tags, and OCR for Paperless-NGX
 url: https://github.com/Morpheus2005/paperless-gpt-haos
@@ -51,6 +51,7 @@ options:
   create_local_pdf: false
   local_pdf_path: /data/pdf
   pdf_upload: false
+  pdf_upload_mode: new
   pdf_replace: false
   pdf_copy_metadata: true
   pdf_ocr_tagging: false
@@ -106,6 +107,7 @@ schema:
   create_local_pdf: "bool?"
   local_pdf_path: "str?"
   pdf_upload: "bool?"
+  pdf_upload_mode: "list(new|version)?"
   pdf_replace: "bool?"
   pdf_copy_metadata: "bool?"
   pdf_ocr_tagging: "bool?"

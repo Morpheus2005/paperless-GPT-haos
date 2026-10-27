@@ -95,13 +95,14 @@ Uses [paperless-gpt](https://github.com/icereed/paperless-gpt) by [Icereed](http
 | `create_local_hocr` | bool? | `false` | Save hOCR files locally |
 | `create_local_pdf` | bool? | `false` | Save enhanced PDFs locally |
 | `pdf_upload` | bool? | `false` | Upload enhanced PDFs to Paperless |
-| `pdf_replace` | bool? | `false` | Replace original after upload (DANGEROUS) |
+| `pdf_upload_mode` | enum? | `new` | `new` (new document) or `version` (new version of the same document, paperless-ngx 3.0+) |
+| `pdf_replace` | bool? | `false` | Replace original after upload (DANGEROUS, ignored in `version` mode) |
 | `log_level` | enum | `info` | Log level: debug, info, warn, error |
 | `listen_interface` | string? | `0.0.0.0:8080` | Listen address |
 
 ## Security
 
-**paperless-gpt has no built-in authentication.** Its web UI is open to anyone who can reach the port. Do not expose it to the internet or an untrusted network. Use Home Assistant's network configuration to restrict access.
+**paperless-gpt has no built-in authentication.** Its web UI is open to anyone who can reach the port. Do not expose it to the internet or an untrusted network. Use Home Assistant's network configuration or an authenticated reverse proxy instead.
 
 ## Support
 

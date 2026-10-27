@@ -101,6 +101,9 @@ configuration:
   pdf_upload:
     name: Upload Enhanced PDF
     description: Upload enhanced PDFs to Paperless-NGX
+  pdf_upload_mode:
+    name: PDF Upload Mode
+    description: "new: upload as a new document (optionally replacing the original). version: add as a new version of the same document, keeping ID, tags and custom fields (paperless-ngx 3.0+, Replace Original is ignored)."
   pdf_replace:
     name: Replace Original PDF
     description: Delete original after upload (DANGEROUS)

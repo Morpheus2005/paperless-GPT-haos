@@ -1,3 +1,9 @@
+## 0.31.0
+
+- **Upstream**: paperless-gpt v0.28.0 → **v0.31.0**. Relevant: searchable-PDF upload in `image` OCR mode fixed; correspondent and document type matching ignores case and no-match correspondent suggestions are no longer created in Paperless; an empty model reply counts as an empty suggestion instead of a failure; LLM retries honour the provider's `Retry-After`. Default prompt templates changed only in wording (correspondent, custom fields), template variables are unchanged, so custom prompts keep working.
+- **New option `pdf_upload_mode`**: `new` (default, previous behaviour: upload as new document, optionally replacing the original) or `version` (paperless-ngx 3.0+: add the searchable PDF as a new version of the same document, keeping ID, tags, custom fields and notes; `pdf_replace` is ignored).
+- **Docs**: Restored the 0.28.1–0.28.3 entries below, which had been reworded by mistake in 0.28.5.
+
 ## 0.28.5
 
 - **Ingress**: Web-UI jetzt über die HA-Seitenleiste erreichbar (`ingress: true`, `panel_icon`, `panel_title`). paperless-gpt baut sein Frontend mit relativer Basis (`--base=./`) und leitet den Router-Basename aus dem Pfad ab, läuft also ohne Umschreiben hinter dem Ingress-Präfix.
@@ -10,23 +16,23 @@
 
 ## 0.28.3
 
-- **Fix (persistence)**: paperless-gpt reads and writes `prompts/`, `config/` and `db/` relative to `/app`. These directories were not persistent, so custom prompts, settings (e.g. custom field selections) and the database were lost across restarts.
+- **Fix (persistence)**: paperless-gpt reads and writes `prompts/`, `config/` and `db/` relative to `/app`. These directories were not persistent, so custom prompts, settings (e.g. custom field selection) and the modification history were lost whenever the container was re-created. `run.sh` now links them to persistent storage:
   - `/app/prompts` → `/config/prompts` (editable via Samba / Studio Code under `addon_configs/`)
   - `/app/config` → `/data/config`
   - `/app/db` → `/data/db`
-- **Fix**: Removed the default-prompt copy to `/data/prompts`. It checked for a non-existent `title.txt` and therefore ran on every start; the files were never read by paperless-gpt anyway. Missing file warnings no longer appear on each boot.
+- **Fix**: Removed the default-prompt copy to `/data/prompts`. It checked for a non-existent `title.txt` and therefore ran on every start; the files were never read by paperless-gpt anyway. Missing prompts are still filled from the defaults by paperless-gpt itself, existing ones are never overwritten.
 - **Migration**: On first start, prompts found in `/data/prompts` are copied to `/config/prompts` (only if that folder is still empty).
 - **Build**: Upstream image pinned to `icereed/paperless-gpt:v0.28.0` (build arg `UPSTREAM_VERSION`) instead of `latest`, so every build ships the version the prompts were verified against.
-- **Defaults**: Neutral defaults again (`llm_model` and `vision_llm_model`: `gpt-4o`, `openai_base_url` empty), matching the README. Existing installations keep their configured values; for Scaleway recommendations, adjust them manually.
+- **Defaults**: Neutral defaults again (`llm_model` and `vision_llm_model`: `gpt-4o`, `openai_base_url` empty), matching the README. Existing installations keep their configured values; for Scaleway see the README example.
 
 ## 0.28.2
 
-- **Fix (startup)**: Disable the custom AppArmor profile (`apparmor: false`) and remove the broken `apparmor.txt`. The hand-crafted s6-overlay v3 profile still denied PID 1 from opening `/init` (`[pid 1] error: can't open /init: permission denied`).
+- **Fix (startup)**: Disable the custom AppArmor profile (`apparmor: false`) and remove the broken `apparmor.txt`. The hand-crafted s6-overlay v3 profile still denied PID 1 from opening `/init` (`Permission denied`, exit code 2) even with `init: false`. Running the container under Docker's default security profile boots s6-overlay cleanly (verified: with `--security-opt apparmor=<addon>` it fails, without it it starts).
 
 ## 0.28.1
 
-- **Fix (startup)**: Root cause of `exec /init failed: Permission denied` was a missing/incorrect AppArmor profile. Added the s6-overlay v3 AppArmor rules required by the HA base image (`/init ix`, plus required /etc/passwd permissions).
-- **Fix**: Corrected `init` back to `false` (correct for s6 v3 base images) and set execute (`100755`) bits on `run.sh` and `rootfs/etc/cont-init.d/00-paperless-gpt.sh` — s6 v3 no longer auto-adds them.
+- **Fix (startup)**: Root cause of `exec /init failed: Permission denied` was a missing/incorrect AppArmor profile. Added the s6-overlay v3 AppArmor rules required by the HA base image (`/init ix`, `/package/**`, `/run/s6/**`, etc.) so PID 1 can exec `/init` inside the container.
+- **Fix**: Corrected `init` back to `false` (correct for s6 v3 base images) and set execute (`100755`) bits on `run.sh` and `rootfs/etc/cont-init.d/00-paperless-gpt.sh` — s6 v3 no longer auto-adds execute permission.
 
 ## 0.28.0
 
