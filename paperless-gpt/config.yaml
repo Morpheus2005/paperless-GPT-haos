@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Paperless-GPT
-version: "0.28.4"
+version: "0.28.5"
 slug: paperless_gpt
 description: AI-powered document titles, tags, and OCR for Paperless-NGX
 url: https://github.com/Morpheus2005/paperless-gpt-haos
@@ -9,6 +9,10 @@ arch:
   - amd64
 init: false
 apparmor: false
+ingress: true
+ingress_port: 8080
+panel_icon: mdi:file-document-edit-outline
+panel_title: Paperless-GPT
 image: ghcr.io/morpheus2005/paperless-gpt
 map:
   - share:rw
@@ -124,5 +128,6 @@ schema:
   puid: "int?"
   pgid: "int?"
 ports:
-  8080/tcp: 8080
-webui: http://[HOST]:[PORT:8080]
+  8080/tcp: null
+ports_description:
+  8080/tcp: "Direkter Zugriff ohne Login (optional, Standard: aus – Zugriff über die Seitenleiste)"
